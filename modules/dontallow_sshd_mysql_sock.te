@@ -1,0 +1,11 @@
+module dontallow_sshd_mysql_sock 1.0;
+
+require {
+        type sshd_t;
+        type mysqld_t;
+        class unix_stream_socket connectto;
+}
+
+#============= sshd_t ==============
+
+dontaudit sshd_t mysqld_t:unix_stream_socket connectto;

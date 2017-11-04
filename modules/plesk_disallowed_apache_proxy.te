@@ -1,0 +1,19 @@
+module plesk_disallowed_apache_proxy 1.1.1;
+
+type plesk_apache_behind_proxy_port_t;
+require {
+	    class tcp_socket { name_connect name_bind };
+	    attribute port_type;
+	    type httpd_t;
+}
+typeattribute plesk_apache_behind_proxy_port_t port_type;
+
+# TODO for next milestone: separate Apache (unused), NginX, php_fpm domains
+# nginx don't allow connect to plesky apache ports
+
+dontaudit httpd_t plesk_apache_behind_proxy_port_t:tcp_socket name_connect;
+
+# apache however must be connected to allow for plesk reconfiguration of domains
+
+allow httpd_t plesk_apache_behind_proxy_port_t:tcp_socket name_bind;
+

@@ -1,0 +1,10 @@
+module iptables_allow_read_httpd_logs 1.0;
+
+require {
+        type httpd_log_t;
+        type iptables_t;
+        class file read;
+}
+
+#============= iptables_t ==============
+allow iptables_t httpd_log_t:file read;
